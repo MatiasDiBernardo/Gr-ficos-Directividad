@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
+import matplotlib
 
 from load_rta import load_data_directivity
-from ventana_temporal import ventaneo_f, dict_to_arr, normalizacion, normalizacion_amplitud, remove_noise
+from calc_aux import ventaneo_f, dict_to_arr, normalizacion, normalizacion_amplitud, remove_noise
 
 def grafico_contorno(path_data, nombre, tiempo_ventaneo):
     # Cargamos los datos
@@ -23,13 +24,16 @@ def grafico_contorno(path_data, nombre, tiempo_ventaneo):
     X, Y, Z = dict_to_arr(freqs, rta)
     
     # Crear el gráfico de contorno
+    matplotlib.rcParams.update({'font.size': 12})
     fig, ax = plt.subplots()
     contour = ax.contourf(X, Y, Z, levels= [-40, -30, -20, -15, -10, -7.5, -5, -2.5, 0, 2.5, 5], cmap='inferno')
 
     ax.set_xscale('log')
     ax.set_xlabel('Frecuencia [Hz]')
-    octavas = [ 320, 640, 1250, 2500, 5000, 10000, 20000]
-    ax.set_xticks(octavas, ["320", "640", "1250", "2500", "5000", "10000", "20000"])
+
+    octavas = [300, 400, 500, 600, 700, 800, 1000, 1500, 2000, 2500, 3000, 4000, 5000, 7500, 10000, 15000, 20000]
+    octavas_str = [str(frec) for frec in octavas]
+    ax.set_xticks(octavas, octavas_str)
     ax.set_ylabel('Angulo [grados]')
     ax.set_title(f'Contornos {nombre}')
     

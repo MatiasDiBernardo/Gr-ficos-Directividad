@@ -1,8 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 
 from load_rta import load_data_directivity
-from ventana_temporal import funcion_green, ventaneo_f, normalizacion_amplitud
+from calc_aux import funcion_green, ventaneo_f, normalizacion_amplitud
 
 # Importamos las respuestas
 path_medios_h = r'Mediciones Directividad\HFD horizontal\txt_3-9_ms'
@@ -36,6 +37,7 @@ freqs_i_h, rtas_i_h = ventaneo_f(freqs_i_h, rtas_i_h, f_i)
 freqs_i_v, rtas_i_v = ventaneo_f(freqs_i_v, rtas_i_v, f_i)
 
 # Crear la figura y los dos subplots distribuidos verticalmente
+matplotlib.rcParams.update({'font.size': 12})
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(6, 6))
 plt.suptitle('Respuesta en Frecuencia HFD', fontsize=14)
 
@@ -56,8 +58,8 @@ ax1.legend(handles, labels)
 ax1.grid()
 ax1.set_ylabel('Nivel [dB]')
 ax1.set_title('Rotación Horizontal')
-# octavas = np.array([320, 640, 1250, 2500, 5000, 10000, 20000])
-octavas = np.array([320,400, 480, 640, 820, 1000, 1500, 2000, 2500, 3000, 4000, 5000, 7500, 10000, 15000, 20000])
+ax1.set_ylim(-50, 5.5)
+octavas = np.array([300, 400, 500, 600, 700, 800, 1000, 1500, 2000, 2500, 3000, 4000, 5000, 7500, 10000, 15000, 20000])
 ax1.set_xticks(octavas)
 ax1.set_xlim([min(freqs_m_h), max(freqs_m_h)])
 ax1.get_xaxis().set_major_formatter(plt.ScalarFormatter()) 
@@ -77,6 +79,7 @@ handles[1], handles[2] = handles[2], handles[1]
 labels[1], labels[2] = labels[2], labels[1]
 ax2.legend(handles, labels)
 ax2.grid()
+ax2.set_ylim(-50, 5.5)
 ax2.set_ylabel('Nivel [dB]')
 ax2.set_title('Rotación Vertical')
 ax2.set_xlim([min(freqs_m_v), max(freqs_m_v)])
@@ -107,6 +110,8 @@ handles[1], handles[2] = handles[2], handles[1]
 labels[1], labels[2] = labels[2], labels[1]
 ax1.legend(handles, labels)
 ax1.grid()
+ax1.set_ylim(-50, 5.5)
+ax1.set_xlabel('Nivel [dB]')
 ax1.set_xlim([min(freqs_i_h), max(freqs_i_h)])
 ax1.set_title('Rotacion Horizontal')
 ax1.set_xticks(octavas)
@@ -128,6 +133,7 @@ handles[1], handles[2] = handles[2], handles[1]
 labels[1], labels[2] = labels[2], labels[1]
 ax2.legend(handles, labels)
 ax2.grid()
+ax2.set_ylim(-50, 5.5)
 ax2.set_title('Rotacion Vertical')
 ax2.set_xticks(octavas)
 ax2.get_xaxis().set_major_formatter(plt.ScalarFormatter()) 
